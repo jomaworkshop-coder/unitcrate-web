@@ -15,9 +15,11 @@ export function SiteFooter() {
             <p className="mt-2 text-sm text-foreground-muted">
               Fast, accurate unit converters. No signup. No ads. No limits.
             </p>
-            <div className="mt-4 flex gap-3 text-sm text-foreground-muted">
+            <div className="mt-4 flex flex-wrap gap-3 text-sm text-foreground-muted">
               <Link href="/about" className="hover:text-foreground underline underline-offset-2">About</Link>
+              <Link href="/contact" className="hover:text-foreground underline underline-offset-2">Contact</Link>
               <Link href="/privacy" className="hover:text-foreground underline underline-offset-2">Privacy</Link>
+              <Link href="/terms" className="hover:text-foreground underline underline-offset-2">Terms</Link>
             </div>
           </div>
 
