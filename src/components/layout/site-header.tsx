@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { CATEGORY_META, type UnitCategory } from "@/lib/units";
+import { Wordmark } from "@/components/brand/logo";
 
 const NAV_CATS: UnitCategory[] = ["length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking"];
 
@@ -13,9 +14,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-border-soft bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
-          <span className="text-primary">Unit</span>
-          <span>Crate</span>
+        <Link href="/" aria-label="UnitCrate home">
+          <Wordmark className="text-lg" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 text-sm">

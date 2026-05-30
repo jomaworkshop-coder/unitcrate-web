@@ -4,7 +4,7 @@ import { CATEGORY_META, type UnitCategory } from "@/lib/units";
 import { MultiConverter } from "@/components/converters/multi-converter";
 
 const CATEGORIES: UnitCategory[] = [
-  "length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking",
+  "length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking", "currency",
 ];
 
 const TOP_PAIRS = [

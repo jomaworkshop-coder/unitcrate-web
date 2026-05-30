@@ -4,12 +4,16 @@ import { notFound } from "next/navigation";
 import { CATEGORY_META, convert, type UnitCategory } from "@/lib/units";
 import { getPairBySlug, getAllStaticParams, getPairsByCategory, type UnitPair } from "@/data/pairs";
 import { MultiConverter } from "@/components/converters/multi-converter";
+import { CurrencyConverter } from "@/components/converters/currency-converter";
+import { fetchFxRates, parseCurrencySlug } from "@/lib/currency";
 
 const VALID_CATEGORIES = Object.keys(CATEGORY_META) as UnitCategory[];
 
 export function generateStaticParams() {
   return getAllStaticParams();
 }
+
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params,
@@ -18,6 +22,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { category, pair } = await params;
   if (!VALID_CATEGORIES.includes(category as UnitCategory)) return {};
+
+  // Currency pair metadata
+  if (category === "currency") {
+    const parsed = parseCurrencySlug(pair);
+    if (!parsed) return {};
+    const fromCode = parsed.from.toUpperCase();
+    const toCode = parsed.to.toUpperCase();
+    const title = `${fromCode} to ${toCode} — Live Exchange Rate Converter`;
+    const description = `Convert ${fromCode} to ${toCode} with live ECB exchange rates. See all 20 major currency rates at once.`;
+    return { title, description, alternates: { canonical: `https://unitcrate.com/currency/${pair}` }, openGraph: { title, description } };
+  }
+
   const data = getPairBySlug(category as UnitCategory, pair);
   if (!data) return {};
 
@@ -40,6 +56,35 @@ export default async function PairPage({
   if (!VALID_CATEGORIES.includes(category as UnitCategory)) notFound();
 
   const cat = category as UnitCategory;
+
+  // Currency pair page — dynamic, fetches live rates
+  if (cat === "currency") {
+    const parsed = parseCurrencySlug(pair);
+    if (!parsed) notFound();
+    const rates = await fetchFxRates();
+    const fromCode = parsed.from.toUpperCase();
+    const toCode = parsed.to.toUpperCase();
+    if (!rates.rates[fromCode] || !rates.rates[toCode]) notFound();
+    return (
+      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+        <nav className="mb-6 text-sm text-foreground-muted">
+          <Link href="/" className="underline underline-offset-2 hover:text-foreground">UnitCrate</Link>
+          {" › "}
+          <Link href="/currency" className="underline underline-offset-2 hover:text-foreground">Currency</Link>
+          {" › "}
+          <span>{fromCode} → {toCode}</span>
+        </nav>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl mb-2">
+          {fromCode} to {toCode} Exchange Rate
+        </h1>
+        <p className="text-foreground-muted mb-8">
+          Live ECB exchange rate. See all 20 major currencies at once.
+        </p>
+        <CurrencyConverter rates={rates} defaultFrom={parsed.from} defaultTo={parsed.to} />
+      </div>
+    );
+  }
+
   const data = getPairBySlug(cat, pair);
   if (!data) notFound();
 

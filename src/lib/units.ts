@@ -7,7 +7,8 @@ export type UnitCategory =
   | "speed"
   | "time"
   | "data"
-  | "cooking";
+  | "cooking"
+  | "currency";
 
 export type UnitDef = {
   value: string;
@@ -27,6 +28,7 @@ export const CATEGORY_META: Record<UnitCategory, { label: string; base: string; 
   time:        { label: "Time",        base: "s",   emoji: "⏱️" },
   data:        { label: "Data",        base: "b",   emoji: "💾" },
   cooking:     { label: "Cooking",     base: "ml",  emoji: "🍳" },
+  currency:    { label: "Currency",    base: "usd", emoji: "💱" },
 };
 
 export const UNITS: Record<UnitCategory, UnitDef[]> = {
@@ -125,6 +127,29 @@ export const UNITS: Record<UnitCategory, UnitDef[]> = {
     { value: "pt",   label: "Pints",        symbol: "pt",   toBase: 473.176 },
     { value: "qt",   label: "Quarts",       symbol: "qt",   toBase: 946.353 },
     { value: "l",    label: "Liters",       symbol: "L",    toBase: 1000 },
+  ],
+  // Currency units — toBase values are placeholder 1.0; live rates are fetched via Frankfurter API
+  currency: [
+    { value: "usd", label: "US Dollar",          symbol: "USD", toBase: 1 },
+    { value: "eur", label: "Euro",               symbol: "EUR", toBase: 1 },
+    { value: "gbp", label: "British Pound",      symbol: "GBP", toBase: 1 },
+    { value: "jpy", label: "Japanese Yen",       symbol: "JPY", toBase: 1 },
+    { value: "cad", label: "Canadian Dollar",    symbol: "CAD", toBase: 1 },
+    { value: "aud", label: "Australian Dollar",  symbol: "AUD", toBase: 1 },
+    { value: "chf", label: "Swiss Franc",        symbol: "CHF", toBase: 1 },
+    { value: "cny", label: "Chinese Yuan",       symbol: "CNY", toBase: 1 },
+    { value: "inr", label: "Indian Rupee",       symbol: "INR", toBase: 1 },
+    { value: "mxn", label: "Mexican Peso",       symbol: "MXN", toBase: 1 },
+    { value: "brl", label: "Brazilian Real",     symbol: "BRL", toBase: 1 },
+    { value: "krw", label: "South Korean Won",   symbol: "KRW", toBase: 1 },
+    { value: "sgd", label: "Singapore Dollar",   symbol: "SGD", toBase: 1 },
+    { value: "hkd", label: "Hong Kong Dollar",   symbol: "HKD", toBase: 1 },
+    { value: "nok", label: "Norwegian Krone",    symbol: "NOK", toBase: 1 },
+    { value: "sek", label: "Swedish Krona",      symbol: "SEK", toBase: 1 },
+    { value: "dkk", label: "Danish Krone",       symbol: "DKK", toBase: 1 },
+    { value: "pln", label: "Polish Zloty",       symbol: "PLN", toBase: 1 },
+    { value: "try", label: "Turkish Lira",       symbol: "TRY", toBase: 1 },
+    { value: "zar", label: "South African Rand", symbol: "ZAR", toBase: 1 },
   ],
 };
 
