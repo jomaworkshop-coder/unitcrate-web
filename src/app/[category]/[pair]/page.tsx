@@ -75,12 +75,12 @@ export default async function PairPage({
         <h2 className="text-xl font-bold mb-4">
           Common {data.fromLabel} to {data.toLabel} conversions
         </h2>
-        <div className="overflow-hidden rounded-[4px] border border-ink">
+        <div className="overflow-hidden rounded-2xl border border-border-soft bg-surface elev-1">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="border-b border-ink bg-surface-muted/60">
-                <th className="px-4 py-3 text-left font-bold">{data.fromLabel} ({data.fromSymbol})</th>
-                <th className="px-4 py-3 text-left font-bold">{data.toLabel} ({data.toSymbol})</th>
+              <tr className="border-b border-border-soft bg-surface-muted/50">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground-muted">{data.fromLabel} ({data.fromSymbol})</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-foreground-muted">{data.toLabel} ({data.toSymbol})</th>
               </tr>
             </thead>
             <tbody>
@@ -88,9 +88,9 @@ export default async function PairPage({
                 const result = convert(v, data.fromUnit, data.toUnit, cat);
                 const rounded = Math.round(result * 100000) / 100000;
                 return (
-                  <tr key={v} className={i % 2 === 0 ? "bg-surface" : "bg-surface-muted/30"}>
-                    <td className="px-4 py-2 tabular-nums">{v} {data.fromSymbol}</td>
-                    <td className="px-4 py-2 tabular-nums font-medium">{rounded} {data.toSymbol}</td>
+                  <tr key={v} className={i % 2 === 0 ? "bg-surface" : "bg-surface-muted/25"}>
+                    <td className="px-4 py-2.5 tabular-nums text-foreground-muted">{v} {data.fromSymbol}</td>
+                    <td className="px-4 py-2.5 font-semibold tabular-nums">{rounded} {data.toSymbol}</td>
                   </tr>
                 );
               })}
@@ -102,8 +102,9 @@ export default async function PairPage({
       {/* Formula */}
       <section className="mt-10">
         <h2 className="text-xl font-bold mb-3">The formula</h2>
-        <div className="rounded-[4px] border border-ink bg-surface-muted/40 px-4 py-3 font-mono text-lg">
-          {data.toSymbol} = {data.formula}
+        <div className="rounded-2xl border border-border-soft bg-surface-muted/40 px-5 py-4 font-mono text-lg">
+          <span className="text-foreground-muted">{data.toSymbol} = </span>
+          <span className="font-semibold text-primary">{data.formula}</span>
         </div>
         <p className="mt-4 text-sm text-foreground-muted">{data.fromContext}</p>
         <p className="mt-2 text-sm text-foreground-muted">{data.toContext}</p>
@@ -115,16 +116,18 @@ export default async function PairPage({
           <h2 className="text-xl font-bold mb-4">Worked examples</h2>
           <div className="space-y-3">
             {data.examples.map((ex, i) => (
-              <div key={i} className="rounded-[4px] border border-ink bg-surface p-4">
-                <p className="font-bold tabular-nums">
-                  {ex.from} {data.fromSymbol} → {ex.to} {data.toSymbol}
+              <div key={i} className="rounded-2xl border border-border-soft bg-surface p-5 elev-1">
+                <p className="font-semibold tabular-nums">
+                  {ex.from} {data.fromSymbol}
+                  <span className="mx-1.5 text-primary">→</span>
+                  {ex.to} {data.toSymbol}
                   {ex.context && (
                     <span className="ml-2 font-normal text-foreground-muted">— {ex.context}</span>
                   )}
                 </p>
-                <p className="mt-1 text-sm text-foreground-muted">
-                  Apply <code className="font-mono text-xs bg-surface-muted px-1 rounded">{data.formula}</code> with input = {ex.from}.
-                  Result: <strong>{ex.to} {data.toSymbol}</strong>.
+                <p className="mt-1.5 text-sm text-foreground-muted">
+                  Apply <code className="rounded bg-surface-muted px-1.5 py-0.5 font-mono text-xs">{data.formula}</code> with input = {ex.from}.
+                  Result: <strong className="text-foreground">{ex.to} {data.toSymbol}</strong>.
                 </p>
               </div>
             ))}
@@ -135,45 +138,25 @@ export default async function PairPage({
       {/* FAQ */}
       <section className="mt-10">
         <h2 className="text-xl font-bold mb-4">FAQ</h2>
-        <div className="space-y-3">
-          <details className="rounded-[4px] border border-ink bg-surface p-4">
-            <summary className="cursor-pointer font-medium">
-              How do I convert {data.fromLabel} to {data.toLabel}?
-            </summary>
-            <p className="mt-2 text-sm text-foreground-muted">
-              Use the formula: <strong>{data.toSymbol} = {data.formula}</strong>.
-              You can also use the converter above — type any value and the result updates instantly.
-            </p>
-          </details>
-          <details className="rounded-[4px] border border-ink bg-surface p-4">
-            <summary className="cursor-pointer font-medium">
-              Where are {data.fromLabel} used?
-            </summary>
-            <p className="mt-2 text-sm text-foreground-muted">{data.fromContext}</p>
-          </details>
-          <details className="rounded-[4px] border border-ink bg-surface p-4">
-            <summary className="cursor-pointer font-medium">
-              Where are {data.toLabel} used?
-            </summary>
-            <p className="mt-2 text-sm text-foreground-muted">{data.toContext}</p>
-          </details>
-          <details className="rounded-[4px] border border-ink bg-surface p-4">
-            <summary className="cursor-pointer font-medium">
-              How do I convert {data.toLabel} back to {data.fromLabel}?
-            </summary>
-            <p className="mt-2 text-sm text-foreground-muted">
-              Use the{" "}
-              <Link href={`/${cat}/${data.inverseSlug}`} className="underline underline-offset-2">
-                {data.toLabel} to {data.fromLabel} converter
-              </Link>
-              .
-            </p>
-          </details>
+        <div className="space-y-2.5">
+          <Faq q={`How do I convert ${data.fromLabel} to ${data.toLabel}?`}>
+            Use the formula: <strong className="text-foreground">{data.toSymbol} = {data.formula}</strong>.
+            You can also use the converter above — type any value and the result updates instantly.
+          </Faq>
+          <Faq q={`Where are ${data.fromLabel} used?`}>{data.fromContext}</Faq>
+          <Faq q={`Where are ${data.toLabel} used?`}>{data.toContext}</Faq>
+          <Faq q={`How do I convert ${data.toLabel} back to ${data.fromLabel}?`}>
+            Use the{" "}
+            <Link href={`/${cat}/${data.inverseSlug}`} className="font-medium text-primary underline underline-offset-2">
+              {data.toLabel} to {data.fromLabel} converter
+            </Link>
+            .
+          </Faq>
         </div>
       </section>
 
       {/* Related pairs */}
-      <section className="mt-10 rounded-2xl bg-surface-muted/40 p-6">
+      <section className="mt-10 rounded-2xl border border-border-soft bg-surface-muted/40 p-6">
         <h2 className="text-lg font-bold mb-4">Related conversions</h2>
         <ul className="space-y-2 text-sm">
           <li>
@@ -201,6 +184,20 @@ export default async function PairPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
     </article>
+  );
+}
+
+function Faq({ q, children }: { q: string; children: React.ReactNode }) {
+  return (
+    <details className="group rounded-2xl border border-border-soft bg-surface px-5 py-4 transition-colors open:bg-surface-muted/30 [@media(hover:hover)]:hover:border-ink">
+      <summary className="flex cursor-pointer items-center justify-between gap-3 font-medium marker:content-['']">
+        {q}
+        <svg className="h-4 w-4 shrink-0 text-foreground-muted transition-transform duration-200 group-open:rotate-180" viewBox="0 0 16 16" fill="none">
+          <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </summary>
+      <p className="mt-2.5 text-sm leading-relaxed text-foreground-muted">{children}</p>
+    </details>
   );
 }
 
