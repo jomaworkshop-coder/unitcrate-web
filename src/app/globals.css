@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf7;
+  --surface: #ffffff;
+  --surface-muted: #f4efe6;
+  --foreground: #0a0a0a;
+  --foreground-muted: #4a4a4a;
+  --ink: #0a0a0a;
+  --border: #0a0a0a;
+  --border-soft: #d8d4ca;
+
+  --primary: #ea580c;
+  --primary-hover: #c2410c;
+  --primary-foreground: #ffffff;
+  --primary-soft: #fff7ed;
+
+  --accent: #16a34a;
+  --accent-soft: #dcfce7;
+
+  --digit-0: #1a1a1a;
+  --digit-1: #ff4d4d;
+  --digit-2: #ff9433;
+  --digit-3: #d4a700;
+  --digit-4: #5fa83a;
+  --digit-5: #33b3a8;
+  --digit-6: #3380ff;
+  --digit-7: #7b4dff;
+  --digit-8: #cc4dcc;
+  --digit-9: #e0367f;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #0c0c0a;
+  --surface: #161613;
+  --surface-muted: #1f1f1b;
+  --foreground: #f4f1e8;
+  --foreground-muted: #908a7a;
+  --ink: #f4f1e8;
+  --border: #f4f1e8;
+  --border-soft: #2c2c27;
+
+  --primary: #fb923c;
+  --primary-hover: #f97316;
+  --primary-foreground: #0c0c0a;
+  --primary-soft: #1c1008;
+
+  --accent: #4ade80;
+  --accent-soft: #052e16;
+
+  --digit-0: #f4f1e8;
+  --digit-1: #ff6f6f;
+  --digit-2: #ffa84d;
+  --digit-3: #f0c84d;
+  --digit-4: #80c45c;
+  --digit-5: #5fcfc4;
+  --digit-6: #5599ff;
+  --digit-7: #9b76ff;
+  --digit-8: #e878e8;
+  --digit-9: #f25b96;
+
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-ink: var(--ink);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { border-color: var(--border); }
 
-body {
+html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+::selection { background: var(--primary-soft); color: var(--primary); }
