@@ -314,5 +314,13 @@ export function getPairBySlug(category: UnitCategory, slug: string): UnitPair | 
 }
 
 export function getAllStaticParams() {
-  return ALL_PAIRS.map((p) => ({ category: p.category, pair: p.slug }));
+  const unitPairs = ALL_PAIRS.map((p) => ({ category: p.category, pair: p.slug }));
+  const CURRENCIES = ["usd","eur","gbp","jpy","cad","aud","chf","cny","inr","mxn","brl","krw","sgd","hkd","nok","sek","dkk","pln","try","zar"];
+  const currencyPairs: { category: string; pair: string }[] = [];
+  for (const from of CURRENCIES) {
+    for (const to of CURRENCIES) {
+      if (from !== to) currencyPairs.push({ category: "currency", pair: `${from}-to-${to}` });
+    }
+  }
+  return [...unitPairs, ...currencyPairs];
 }
