@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CATEGORY_META, type UnitCategory } from "@/lib/units";
 
-const CATS: UnitCategory[] = ["length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking"];
+const CATS: UnitCategory[] = ["length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking", "energy", "pressure", "power", "angle", "fuel"];
 
 export function SiteFooter() {
   return (

@@ -5,6 +5,7 @@ import { MultiConverter } from "@/components/converters/multi-converter";
 
 const CATEGORIES: UnitCategory[] = [
   "length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking", "currency",
+  "energy", "pressure", "power", "angle", "fuel",
 ];
 
 const TOP_PAIRS = [

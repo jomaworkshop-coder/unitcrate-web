@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy:prod": "vercel --prod --yes && node ../_shared/google-ops/bin/post-deploy.mjs --domain=unitcrate.com --site-name=unitcrate.com --category=computers_electronics --domain-property"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.6",

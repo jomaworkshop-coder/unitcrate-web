@@ -8,7 +8,12 @@ export type UnitCategory =
   | "time"
   | "data"
   | "cooking"
-  | "currency";
+  | "currency"
+  | "energy"
+  | "pressure"
+  | "power"
+  | "angle"
+  | "fuel";
 
 export type UnitDef = {
   value: string;
@@ -29,6 +34,11 @@ export const CATEGORY_META: Record<UnitCategory, { label: string; base: string; 
   data:        { label: "Data",        base: "b",   emoji: "💾" },
   cooking:     { label: "Cooking",     base: "ml",  emoji: "🍳" },
   currency:    { label: "Currency",    base: "usd", emoji: "💱" },
+  energy:      { label: "Energy",      base: "j",   emoji: "⚡" },
+  pressure:    { label: "Pressure",    base: "pa",  emoji: "🔵" },
+  power:       { label: "Power",       base: "w",   emoji: "💡" },
+  angle:       { label: "Angle",       base: "deg", emoji: "📐" },
+  fuel:        { label: "Fuel Economy", base: "lp100km", emoji: "⛽" },
 };
 
 export const UNITS: Record<UnitCategory, UnitDef[]> = {
@@ -150,6 +160,63 @@ export const UNITS: Record<UnitCategory, UnitDef[]> = {
     { value: "pln", label: "Polish Zloty",       symbol: "PLN", toBase: 1 },
     { value: "try", label: "Turkish Lira",       symbol: "TRY", toBase: 1 },
     { value: "zar", label: "South African Rand", symbol: "ZAR", toBase: 1 },
+  ],
+  // Energy — base: joule (j)
+  energy: [
+    { value: "j",    label: "Joules",            symbol: "J",    toBase: 1 },
+    { value: "kj",   label: "Kilojoules",        symbol: "kJ",   toBase: 1_000 },
+    { value: "mj",   label: "Megajoules",        symbol: "MJ",   toBase: 1_000_000 },
+    { value: "wh",   label: "Watt-hours",        symbol: "Wh",   toBase: 3_600 },
+    { value: "kwh",  label: "Kilowatt-hours",    symbol: "kWh",  toBase: 3_600_000 },
+    { value: "cal",  label: "Calories (small)",  symbol: "cal",  toBase: 4.184 },
+    { value: "kcal", label: "Kilocalories (kcal)", symbol: "kcal", toBase: 4_184 },
+    { value: "btu",  label: "BTU",               symbol: "BTU",  toBase: 1_055.06 },
+    { value: "ev",   label: "Electronvolts",     symbol: "eV",   toBase: 1.602176634e-19 },
+    { value: "ftlb", label: "Foot-pounds",       symbol: "ft·lb", toBase: 1.35582 },
+  ],
+  // Pressure — base: pascal (pa)
+  pressure: [
+    { value: "pa",   label: "Pascals",           symbol: "Pa",   toBase: 1 },
+    { value: "hpa",  label: "Hectopascals",      symbol: "hPa",  toBase: 100 },
+    { value: "kpa",  label: "Kilopascals",       symbol: "kPa",  toBase: 1_000 },
+    { value: "mpa",  label: "Megapascals",       symbol: "MPa",  toBase: 1_000_000 },
+    { value: "bar",  label: "Bar",               symbol: "bar",  toBase: 100_000 },
+    { value: "mbar", label: "Millibar",          symbol: "mbar", toBase: 100 },
+    { value: "psi",  label: "PSI",               symbol: "psi",  toBase: 6_894.757 },
+    { value: "atm",  label: "Atmospheres",       symbol: "atm",  toBase: 101_325 },
+    { value: "mmhg", label: "mmHg (Torr)",       symbol: "mmHg", toBase: 133.322 },
+    { value: "inhg", label: "Inches of mercury", symbol: "inHg", toBase: 3_386.39 },
+  ],
+  // Power — base: watt (w)
+  power: [
+    { value: "w",    label: "Watts",             symbol: "W",    toBase: 1 },
+    { value: "kw",   label: "Kilowatts",         symbol: "kW",   toBase: 1_000 },
+    { value: "mw",   label: "Megawatts",         symbol: "MW",   toBase: 1_000_000 },
+    { value: "gw",   label: "Gigawatts",         symbol: "GW",   toBase: 1_000_000_000 },
+    { value: "hp",   label: "Horsepower (mech)", symbol: "hp",   toBase: 745.69987 },
+    { value: "hpe",  label: "Horsepower (elec)", symbol: "hp(e)",toBase: 746 },
+    { value: "btuhr",label: "BTU/hour",          symbol: "BTU/h",toBase: 0.29307107 },
+    { value: "cals", label: "Calories/second",   symbol: "cal/s",toBase: 4.184 },
+    { value: "ftlbs",label: "Foot-pounds/second",symbol: "ft·lb/s", toBase: 1.35582 },
+  ],
+  // Angle — base: degree (deg)
+  angle: [
+    { value: "deg",    label: "Degrees",     symbol: "°",    toBase: 1 },
+    { value: "rad",    label: "Radians",     symbol: "rad",  toBase: 180 / Math.PI },
+    { value: "grad",   label: "Gradians",    symbol: "grad", toBase: 0.9 },
+    { value: "arcmin", label: "Arcminutes",  symbol: "′",    toBase: 1 / 60 },
+    { value: "arcsec", label: "Arcseconds",  symbol: "″",    toBase: 1 / 3600 },
+    { value: "turn",   label: "Turns",       symbol: "turn", toBase: 360 },
+    { value: "mrad",   label: "Milliradians",symbol: "mrad", toBase: 180 / (Math.PI * 1000) },
+  ],
+  // Fuel economy — base: L/100km (lp100km)
+  // NOTE: mpg is inverse of L/100km so needs function converters
+  fuel: [
+    { value: "lp100km", label: "Liters/100km",    symbol: "L/100km", toBase: 1 },
+    { value: "kmpl",    label: "Kilometers/liter", symbol: "km/L",    toBase: (v: number) => 100 / v,   fromBase: (v: number) => 100 / v },
+    { value: "mpgus",   label: "MPG (US)",         symbol: "mpg",     toBase: (v: number) => 235.214 / v, fromBase: (v: number) => 235.214 / v },
+    { value: "mpguk",   label: "MPG (UK)",         symbol: "mpg(UK)", toBase: (v: number) => 282.481 / v, fromBase: (v: number) => 282.481 / v },
+    { value: "mpl",     label: "Miles/liter",      symbol: "mi/L",    toBase: (v: number) => 100 / (v * 1.60934), fromBase: (v: number) => 100 / (v * 1.60934) },
   ],
 };
 

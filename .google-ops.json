@@ -1,0 +1,18 @@
+{
+  "domain": "unitcrate.com",
+  "siteName": "unitcrate.com",
+  "category": "computers_electronics",
+  "registeredAt": "2026-05-30T20:04:17.895Z",
+  "ga4": {
+    "accountName": "accounts/393431220",
+    "propertyName": "properties/539593976",
+    "propertyId": "539593976",
+    "measurementId": "G-9RQEBXRJ92",
+    "streamName": "properties/539593976/dataStreams/14973626783"
+  },
+  "gsc": {
+    "siteUrl": "sc-domain:unitcrate.com",
+    "alreadyExisted": true
+  },
+  "sitemap": "https://unitcrate.com/sitemap.xml"
+}
