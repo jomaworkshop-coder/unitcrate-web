@@ -133,7 +133,7 @@ export function ChatPanel({ config }: ChatPanelProps) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-[var(--color-accent)] text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
+        className="grid h-14 w-14 place-items-center rounded-full bg-[var(--color-accent)] text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
         aria-label="Open chat assistant"
       >
         <MessageCircle className="h-6 w-6" />
@@ -143,7 +143,7 @@ export function ChatPanel({ config }: ChatPanelProps) {
 
   return (
     <div
-      className="fixed bottom-5 right-5 z-50 flex w-[380px] max-w-[calc(100vw-2.5rem)] flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl"
+      className="flex w-[380px] max-w-[calc(100vw-2.5rem)] flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl"
       role="dialog"
       aria-modal="false"
       aria-label={ariaLabel}

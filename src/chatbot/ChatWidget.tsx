@@ -22,17 +22,21 @@ export function ChatWidget({ config }: ChatWidgetProps) {
   // No ChatPanel JS executes until the user clicks.
   const [mounted, setMounted] = React.useState(false);
 
-  if (!mounted) {
-    return (
-      <button
-        onClick={() => setMounted(true)}
-        className="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-[var(--color-accent)] text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
-        aria-label="Open chat assistant"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </button>
-    );
-  }
-
-  return <ChatPanel config={config} />;
+  return (
+    // Inline style ensures fixed positioning survives any CSS rule that sets
+    // position:relative on ancestor elements (e.g. body > * selectors).
+    <div style={{ position: "fixed", bottom: "1.25rem", right: "1.25rem", zIndex: 50 }}>
+      {!mounted ? (
+        <button
+          onClick={() => setMounted(true)}
+          className="grid h-14 w-14 place-items-center rounded-full bg-[var(--color-accent)] text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
+          aria-label="Open chat assistant"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </button>
+      ) : (
+        <ChatPanel config={config} />
+      )}
+    </div>
+  );
 }
