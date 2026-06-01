@@ -301,6 +301,7 @@ function generatePairs(category: UnitCategory): UnitPair[] {
 
 const ALL_CATEGORIES: UnitCategory[] = [
   "length", "weight", "temperature", "volume", "area", "speed", "time", "data", "cooking",
+  "energy", "pressure", "power", "angle", "fuel",
 ];
 
 export const ALL_PAIRS: UnitPair[] = ALL_CATEGORIES.flatMap(generatePairs);
