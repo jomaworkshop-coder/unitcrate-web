@@ -38,10 +38,27 @@ export function SiteFooter() {
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-foreground-muted mb-3">Portfolio</p>
-            <ul className="space-y-1.5 text-sm">
-              <li><a href="https://kalkmate.com" className="text-foreground-muted hover:text-foreground underline-offset-2 hover:underline">Kalkmate — Calculators</a></li>
-              <li><a href="https://kalkfin.com" className="text-foreground-muted hover:text-foreground underline-offset-2 hover:underline">Kalkfin — Finance</a></li>
-              <li><a href="https://vitamath.io" className="text-foreground-muted hover:text-foreground underline-offset-2 hover:underline">VitaMath — Health</a></li>
+            <ul className="space-y-3 text-sm">
+              <li>
+                <a href="https://kalkmate.com" className="font-semibold hover:text-foreground underline-offset-2 hover:underline">Kalkmate</a>
+                <p className="text-xs text-foreground-muted">General-purpose calculators</p>
+              </li>
+              <li>
+                <a href="https://kalkfin.com" className="font-semibold hover:text-foreground underline-offset-2 hover:underline">Kalkfin</a>
+                <p className="text-xs text-foreground-muted">Finance calculators</p>
+              </li>
+              <li>
+                <a href="https://vitamath.io" className="font-semibold hover:text-foreground underline-offset-2 hover:underline">Vitamath</a>
+                <p className="text-xs text-foreground-muted">Health &amp; nutrition calculators</p>
+              </li>
+              <li>
+                <a href="https://wordfox.io" className="font-semibold hover:text-foreground underline-offset-2 hover:underline">Wordfox</a>
+                <p className="text-xs text-foreground-muted">Word tools</p>
+              </li>
+              <li>
+                <a href="https://pdfnest.io" className="font-semibold hover:text-foreground underline-offset-2 hover:underline">PDFnest</a>
+                <p className="text-xs text-foreground-muted">PDF tools</p>
+              </li>
             </ul>
           </div>
         </div>
