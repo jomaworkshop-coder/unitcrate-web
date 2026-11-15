@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CATEGORY_META, convert, type UnitCategory } from "@/lib/units";
-import { getPairBySlug, getAllStaticParams, getPairsByCategory, type UnitPair } from "@/data/pairs";
+import { getPairBySlug, getAllStaticParams, getPairsByCategory, isPriorityPair, type UnitPair } from "@/data/pairs";
 import { MultiConverter } from "@/components/converters/multi-converter";
 import { CurrencyConverter } from "@/components/converters/currency-converter";
 import { fetchFxRates, parseCurrencySlug, convertCurrency, formatCurrency } from "@/lib/currency";
@@ -31,7 +31,13 @@ export async function generateMetadata({
     const toCode = parsed.to.toUpperCase();
     const title = `${fromCode} to ${toCode} — Live Exchange Rate Converter`;
     const description = `Convert ${fromCode} to ${toCode} with live ECB exchange rates. See all 20 major currency rates at once.`;
-    return { title, description, alternates: { canonical: `https://unitcrate.com/currency/${pair}` }, openGraph: { title, description } };
+    return {
+      title,
+      description,
+      alternates: { canonical: `https://unitcrate.com/currency/${pair}` },
+      openGraph: { title, description },
+      robots: isPriorityPair("currency", pair) ? undefined : { index: false, follow: true },
+    };
   }
 
   const data = getPairBySlug(category as UnitCategory, pair);
@@ -44,6 +50,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `https://unitcrate.com/${category}/${pair}` },
     openGraph: { title, description },
+    robots: isPriorityPair(category, pair) ? undefined : { index: false, follow: true },
   };
 }
 
