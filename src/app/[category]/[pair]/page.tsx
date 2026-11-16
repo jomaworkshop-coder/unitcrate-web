@@ -6,6 +6,7 @@ import { getPairBySlug, getAllStaticParams, getPairsByCategory, isPriorityPair, 
 import { MultiConverter } from "@/components/converters/multi-converter";
 import { CurrencyConverter } from "@/components/converters/currency-converter";
 import { fetchFxRates, parseCurrencySlug, convertCurrency, formatCurrency } from "@/lib/currency";
+import { PAIR_GUIDES } from "@/data/pair-guides";
 
 const VALID_CATEGORIES = Object.keys(CATEGORY_META) as UnitCategory[];
 
@@ -242,7 +243,8 @@ export default async function PairPage({
     .filter((p) => p.fromUnit === data.fromUnit && p.slug !== data.slug)
     .slice(0, 5);
 
-  const schema = buildSchema(data);
+  const guide = PAIR_GUIDES[`${cat}/${data.slug}`];
+  const schema = buildSchema(data, guide?.faqs ?? []);
 
   return (
     <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
@@ -328,10 +330,15 @@ export default async function PairPage({
         </section>
       )}
 
+      {guide && <section>{guide.sections}</section>}
+
       {/* FAQ */}
       <section className="mt-10">
         <h2 className="text-xl font-bold mb-4">FAQ</h2>
         <div className="space-y-2.5">
+          {guide?.faqs.map((f) => (
+            <Faq key={f.question} q={f.question}>{f.answer}</Faq>
+          ))}
           <Faq q={`How do I convert ${data.fromLabel} to ${data.toLabel}?`}>
             Use the formula: <strong className="text-foreground">{data.toSymbol} = {data.formula}</strong>.
             You can also use the converter above — type any value and the result updates instantly.
@@ -394,7 +401,7 @@ function Faq({ q, children }: { q: string; children: React.ReactNode }) {
   );
 }
 
-function buildSchema(data: UnitPair) {
+function buildSchema(data: UnitPair, extraFaqs: Array<{ question: string; answer: string }>) {
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -413,6 +420,11 @@ function buildSchema(data: UnitPair) {
       {
         "@type": "FAQPage",
         mainEntity: [
+          ...extraFaqs.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
           {
             "@type": "Question",
             name: `How do I convert ${data.fromLabel} to ${data.toLabel}?`,
